@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "encounter-author": {
+      "command": "node",
+      "args": [
+        "${CLAUDE_PLUGIN_ROOT}/runtime/dist/server.mjs"
+      ],
+      "env": {
+        "ENCOUNTER_DATA_DIR": "${CLAUDE_PLUGIN_DATA}",
+        "ENCOUNTER_WRITES_DISABLED": "1"
+      },
+      "cwd": "${CLAUDE_PLUGIN_ROOT}"
+    }
+  }
+}

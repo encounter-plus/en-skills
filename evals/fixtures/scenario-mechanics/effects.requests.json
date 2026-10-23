@@ -1,0 +1,77 @@
+[
+  {
+    "schema": "models.AdminAnswerRequest",
+    "body": {
+      "answer_text": "контур42",
+      "sector_id": 501,
+      "for_member_id": 0
+    }
+  },
+  {
+    "schema": "models.AdminAnswerRequest",
+    "body": {
+      "answer_text": "контур42",
+      "sector_id": 502,
+      "for_member_id": 0
+    }
+  },
+  {
+    "schema": "models.AdminBonusRequest",
+    "body": {
+      "bonus_name": "Раннее решение",
+      "answers": [
+        "контур42"
+      ],
+      "bonus_time": 7,
+      "negative": false,
+      "bonus_help": "",
+      "task": "",
+      "has_relative_limit": true,
+      "life_time_sec": 600,
+      "has_delay": false,
+      "has_absolute_limit": false,
+      "all_levels": false,
+      "level_ids": [
+        900001
+      ],
+      "for_member_id": 0
+    }
+  },
+  {
+    "schema": "models.AdminBonusRequest",
+    "body": {
+      "bonus_name": "Проверка ключа",
+      "answers": [
+        "контур42"
+      ],
+      "bonus_time": 0,
+      "negative": false,
+      "bonus_help": "Сохраните полученную фигуру до следующего этапа.",
+      "task": "",
+      "has_relative_limit": false,
+      "has_delay": false,
+      "has_absolute_limit": false,
+      "all_levels": false,
+      "level_ids": [
+        900001
+      ],
+      "for_member_id": 0
+    }
+  },
+  {
+    "schema": "models.AdminHelpRequest",
+    "body": {
+      "help_text": "Начинается вторая фаза. Примените сохранённую фигуру.",
+      "timeout": 11,
+      "for_member_id": 0,
+      "is_penalty": false
+    }
+  },
+  {
+    "schema": "models.AdminLevelSettingsRequest",
+    "body": {
+      "section": "sectors",
+      "required_sectors_count": 2
+    }
+  }
+]

@@ -1,0 +1,16 @@
+/* Reconstructed outer page; not a capture of the complete live page. */
+body{margin:0;background:#0f1110;color:#d6e4d9;font-family:Play,Arial,sans-serif}
+.mock-page{max-width:1440px;padding:24px;margin:auto}
+.mock-header{display:flex;gap:24px;align-items:center;border-bottom:1px solid #303833;padding-bottom:20px}
+.mock-header strong{white-space:nowrap;flex-shrink:0;color:#5ed136;font-size:24px}
+.mock-header span{font-size:12px;color:#9aa3a0}
+.mock-layout{display:grid;grid-template-columns:220px minmax(0,1fr);gap:39px;margin-top:24px}
+.mock-sidebar{line-height:3;padding:16px;background:#161c18}
+.mock-main{min-width:0}
+.mock-main nav{font-size:13px;color:#9aa3a0;margin-bottom:20px}
+.mock-card{padding:24px;background:#161c18;margin-bottom:20px;border:1px solid #2a332c}
+.mock-card h1{font-size:28px;margin:12px 0}
+.mock-card h2{font-size:16px;text-transform:uppercase;margin:0 0 20px}
+.mock-card dl{display:grid;grid-template-columns:auto 1fr;gap:8px 24px;font-size:14px}
+.mock-card dd{margin:0}
+@media(max-width:767px){.mock-page{padding:12px}.mock-sidebar{display:none}.mock-layout{display:block;margin-top:16px}.mock-header{gap:12px}.mock-header strong{font-size:18px}.mock-card{padding:16px}.mock-card h1{font-size:23px}}

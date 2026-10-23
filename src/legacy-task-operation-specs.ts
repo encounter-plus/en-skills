@@ -1,0 +1,27 @@
+import type {LegacyOperationSpec} from './operation-contract.ts';
+const positive=(value:unknown):value is number=>typeof value==='number'&&Number.isSafeInteger(value)&&value>0;
+const equal=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
+const text=(value:unknown)=>typeof value==='string'?value.replace(/\r\n|\r/g,'\n'):value;
+const rows=(value:Record<string,unknown>)=>value.tasks as Record<string,unknown>[];
+export const legacyTaskOperationSpec:LegacyOperationSpec={
+ definition:{type:'function',function:{name:'encounter_propose_task_operation',description:'Prepare a legacy task create, update, or exact deletion. Creation requires an explicit newline display flag. Updates preserve existing literal text, recipient and newline display flag unless explicitly changed. Stored text remains literal for either display mode. Human approval and exact task inventory read-back are mandatory.',parameters:{type:'object',additionalProperties:false,properties:{action:{type:'string',enum:['create','update','delete']},levelId:{type:'integer',minimum:1},taskId:{type:'integer',minimum:1},taskText:{type:'string',maxLength:100000},forMemberId:{type:'integer',minimum:0},replaceNlToBr:{type:'boolean'}},required:['action','levelId']}}},
+ capability:args=>args.action==='create'?'task-create':args.action==='delete'?'task-delete':'task-update',
+ validate(value){
+  if(!['create','update','delete'].includes(String(value.action))||!positive(value.levelId)||Object.keys(value).some(key=>!['action','levelId','taskId','taskText','forMemberId','replaceNlToBr'].includes(key)))throw new Error('Invalid task operation');
+  if(value.action==='create'?value.taskId!==undefined:!positive(value.taskId))throw new Error('Choose an exact existing task ID');
+  if(value.action==='delete'){if(value.taskText!==undefined||value.replaceNlToBr!==undefined||value.forMemberId!==undefined)throw new Error('Deletion cannot change fields');}
+  else if(value.taskText!==undefined&&(typeof value.taskText!=='string'||value.taskText.length>100000)||value.replaceNlToBr!==undefined&&typeof value.replaceNlToBr!=='boolean'||value.action==='create'&&(typeof value.taskText!=='string'||typeof value.replaceNlToBr!=='boolean')||value.action==='update'&&value.taskText===undefined&&value.forMemberId===undefined&&value.replaceNlToBr===undefined)throw new Error('Choose exact task fields and an explicit creation display flag');
+  if(value.forMemberId!==undefined&&(typeof value.forMemberId!=='number'||!Number.isSafeInteger(value.forMemberId)||value.forMemberId<0))throw new Error('Choose a native recipient option');
+  return structuredClone(value)as Record<string,unknown>&{levelId:number};
+ },
+ async read(api,args,signal){const response=await api.request(`/admin/games/${api.metadata.binding.gameId}/levels/${args.levelId}/tasks`,{signal});if(!response.ok)throw new Error('Exact task inventory unavailable');const body=await response.json();if(body.game_id!==api.metadata.binding.gameId||body.level?.level_id!==args.levelId||typeof body.version!=='string'||!body.version.startsWith('legacy-observed:task-index-v1:')||!Array.isArray(body.tasks))throw new Error('Incomplete task inventory');return body;},
+ checkBefore(before,args){if(args.action!=='create'&&rows(before).filter(row=>row.task_id===args.taskId).length!==1)throw new Error('Task is outside selected level');},
+ request(api,args,before){const root=`/admin/games/${api.metadata.binding.gameId}/levels/${args.levelId}/tasks`,task=rows(before).find(row=>row.task_id===args.taskId);return api.request(args.action==='create'?root:root+'/'+args.taskId,{method:args.action==='create'?'POST':args.action==='delete'?'DELETE':'PUT',headers:{'Content-Type':'application/json','X-Authoring-Expected-Revision':String(args.action==='update'?task?._authoring_revision:before.version)},...(args.action==='delete'?{}:{body:JSON.stringify({task_text:args.taskText,...(args.replaceNlToBr!==undefined?{replace_nl_to_br:args.replaceNlToBr}:{}),...(args.forMemberId===undefined?{}:{for_member_id:args.forMemberId})})})});},
+ verify(before,after,args,receipt){const prior=rows(before),actual=rows(after);if(!Array.isArray(actual)||after.level&&typeof after.level==='object'&&(after.level as Record<string,unknown>).level_id!==args.levelId)return false;
+  if(args.action==='delete')return equal(actual,prior.filter(row=>row.task_id!==args.taskId));
+  const oldIds=new Set(prior.map(row=>row.task_id)),candidates=args.action==='create'?actual.filter(row=>!oldIds.has(row.task_id)):actual.filter(row=>row.task_id===args.taskId);if(candidates.length!==1)return false;const target=candidates[0];
+  if(target.task_text!==text(args.taskText??prior.find(row=>row.task_id===args.taskId)?.task_text)||target._authoring_replace_newlines!==(args.replaceNlToBr??prior.find(row=>row.task_id===args.taskId)?._authoring_replace_newlines)||target.for_member_id!==(args.forMemberId??(args.action==='create'?0:prior.find(row=>row.task_id===args.taskId)?.for_member_id))||receipt?.created_task_id!==undefined&&target.task_id!==receipt.created_task_id)return false;
+  if(args.action==='create')return actual.length===prior.length+1&&equal(actual.filter(row=>oldIds.has(row.task_id)),prior);
+  const previous=prior.find(row=>row.task_id===args.taskId);return !!previous&&typeof previous._authoring_literal_preservation==='string'&&target._authoring_literal_preservation===previous._authoring_literal_preservation&&equal(actual.filter(row=>row.task_id!==args.taskId),prior.filter(row=>row.task_id!==args.taskId));
+ },
+};

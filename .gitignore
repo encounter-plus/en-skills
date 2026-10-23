@@ -1,0 +1,53 @@
+# Dependencies, generated builds and caches (including nested packages)
+node_modules/
+dist/
+.cache/
+.npm/
+.pnpm-store/
+*.tsbuildinfo
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Local host state and secrets; keep shareable configuration examples
+.local/
+.env
+.env.*
+!.env.example
+.auth/
+
+# Run output and diagnostics; JSON/JSONL fixtures remain trackable
+*.log
+*.stdout
+*.stderr
+coverage/
+blob-report/
+
+# Local npm archives and Playwright output
+*.tgz
+!vendor/encounter-api-sdk-0.1.0.tgz
+*.zip
+playwright-report/
+test-results/
+artifacts/
+# Scratch data may be created in the root or a nested package
+.tmp*
+.scratch*
+.runtime*
+.DS_Store
+Thumbs.db
+
+# Research notes and evaluation runs stay local, outside repository contents
+/docs/research/
+/research/
+/evals/results/
+/evals/runs/
+/evals/prepared/
+
+# Prepared release archives and verification manifests
+/release-output/
+
+# Browser automation output and incremental compiler cache
+.playwright-mcp/
+*.tsbuildinfo

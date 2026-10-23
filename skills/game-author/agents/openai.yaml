@@ -1,0 +1,6 @@
+interface:
+  display_name: "Encounter Game Author"
+  short_description: "Проверка и редактирование игр Encounter"
+  default_prompt: "Use $game-author to review this Encounter game and safely apply the requested fixes."
+policy:
+  allow_implicit_invocation: true

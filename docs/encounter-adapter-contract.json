@@ -1,0 +1,302 @@
+{
+  "paths": {
+    "/admin/games/{id}": {
+      "get": {
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ID игры",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.AdminGameEditorResponse"
+            }
+          },
+          "401": {
+            "description": "Требуется авторизация",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Доступ запрещён",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Не найдено",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          }
+        },
+        "description": "Полный набор настроек игры для редактирования (ASP GameEdit.aspx)."
+      }
+    },
+    "/admin/games/{id}/levels": {
+      "get": {
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ID игры",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.AdminGameLevelsResponse"
+            }
+          },
+          "400": {
+            "description": "Некорректный запрос",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Требуется авторизация",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Доступ запрещён",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "404": {
+            "description": "Не найдено",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "500": {
+            "description": "Внутренняя ошибка сервера",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          }
+        },
+        "description": "Список уровней игры с их состоянием и порядком (ASP LevelsList)."
+      }
+    },
+    "/admin/games/{id}/levels/{levelId}/editor": {
+      "get": {
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ID игры",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "ID уровня",
+            "name": "levelId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.AdminLevelEditorResponse"
+            }
+          },
+          "400": {
+            "description": "Некорректный запрос",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Требуется авторизация",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Доступ запрещён",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          }
+        },
+        "description": "Полный состав уровня: задания, ответы, бонусы, подсказки и настройки (ASP LevelEdit)."
+      }
+    },
+    "/admin/games/{id}/levels/{levelId}/apply": {
+      "post": {
+        "parameters": [
+          {
+            "type": "integer",
+            "description": "ID игры",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "type": "integer",
+            "description": "ID уровня",
+            "name": "levelId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "description": "Операции",
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/models.AdminLevelApplyRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/models.AdminLevelApplyResponse"
+            }
+          },
+          "207": {
+            "description": "Часть операций не выполнена",
+            "schema": {
+              "$ref": "#/definitions/models.AdminLevelApplyResponse"
+            }
+          },
+          "400": {
+            "description": "Некорректный запрос",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "401": {
+            "description": "Требуется авторизация",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "403": {
+            "description": "Доступ запрещён",
+            "schema": {
+              "$ref": "#/definitions/models.ErrorResponse"
+            }
+          },
+          "409": {
+            "description": "stale_version | players_on_level",
+            "schema": {
+              "$ref": "#/definitions/models.AdminLevelApplyConflict"
+            }
+          }
+        },
+        "description": "Табличный редактор: create/update/delete по заданиям, подсказкам,\nштрафным подсказкам, бонусам, секторам и ответам одним запросом.\nНе более 200 операций. Если на уровне уже есть игроки, принимается\nтолько одна операция update; пока уровень пуст, массовые правки\nразрешены и в идущей игре. Устаревший base_version → 409 со свежим\nснимком."
+      }
+    }
+  },
+  "definitions": {
+    "models.AdminLevelApplyRequest": {
+      "type": "object",
+      "properties": {
+        "base_version": {
+          "type": "string"
+        },
+        "ops": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.AdminLevelApplyOp"
+          }
+        }
+      }
+    },
+    "models.AdminLevelApplyOp": {
+      "type": "object",
+      "properties": {
+        "entity": {
+          "description": "task | help | penalty_help | bonus | sector | answer",
+          "type": "string"
+        },
+        "fields": {
+          "description": "swaggertype: swag не умеет разворачивать json.RawMessage и без подсказки\nвалит всю генерацию документации.",
+          "type": "object"
+        },
+        "id": {
+          "description": "для update/delete",
+          "type": "integer"
+        },
+        "op": {
+          "description": "create | update | delete",
+          "type": "string"
+        },
+        "tmp_id": {
+          "description": "для create, ссылка внутри запроса",
+          "type": "string"
+        }
+      }
+    },
+    "models.AdminLevelApplyResult": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "id": {
+          "type": "integer"
+        },
+        "index": {
+          "type": "integer"
+        },
+        "message": {
+          "type": "string"
+        },
+        "status": {
+          "description": "ok | error",
+          "type": "string"
+        },
+        "tmp_id": {
+          "type": "string"
+        }
+      }
+    },
+    "models.AdminLevelApplyResponse": {
+      "type": "object",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.AdminLevelApplyResult"
+          }
+        },
+        "version": {
+          "type": "string"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/models.AdminLevelApplyWarning"
+          }
+        }
+      }
+    }
+  }
+}

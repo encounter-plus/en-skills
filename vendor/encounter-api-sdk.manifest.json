@@ -1,0 +1,9 @@
+{
+  "language": "typescript",
+  "name": "@encounter-api/sdk",
+  "version": "0.1.0",
+  "file": "encounter-api-sdk-0.1.0.tgz",
+  "sha256": "652e3552004846756bd48ac4325beb343d5af0a1f3f9ff674ff6252a52270760",
+  "size": 592672,
+  "integrity": "sha512-d6+Eu3m2L7p07juz+SnPxQW3JzHyW/3Q2gE+n5sDowae99SMIg0dozLDket3znl0O/lMgEGJoxJFplRxLhpswA=="
+}

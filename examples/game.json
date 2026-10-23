@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "gameId": "synthetic-game-001",
+  "domain": "synthetic.invalid",
+  "phase": "draft",
+  "format": "field",
+  "title": "Синтетическая учебная игра",
+  "levels": [
+    {
+      "id": "synthetic-level-001",
+      "title": "Проверка учебного кода",
+      "kind": "search",
+      "task": "Найдите учебную надпись. ФО: код без префикса.",
+      "answerFormat": "код без префикса",
+      "autoPassSeconds": 600,
+      "requiredSectors": 1,
+      "playersStarted": false,
+      "helps": [{ "id": "synthetic-help-001", "text": "Посмотрите на учебную карточку.", "afterSeconds": 300 }],
+      "sectors": [{ "id": "synthetic-sector-001", "answers": ["конь6"] }]
+    }
+  ]
+}

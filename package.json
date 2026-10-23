@@ -1,0 +1,99 @@
+{
+  "name": "@encounter-author/tools",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "exports": {
+    "./google-public": {
+      "types": "./dist/google-public.d.ts",
+      "import": "./dist/google-public.js"
+    },
+    "./browser": {
+      "types": "./dist/browser.d.ts",
+      "import": "./dist/browser.js"
+    },
+    "./harness/render": "./harness/render.mjs",
+    "./harness/engine-preview": "./harness/engine-preview/contract.mjs",
+    "./harness/engine-preview/page": "./harness/engine-preview/page.mjs",
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./code-generator": {
+      "types": "./dist/code-generator.d.ts",
+      "import": "./dist/code-generator.js"
+    },
+    "./authoring-contracts": {
+      "types": "./dist/authoring-contracts.d.ts",
+      "import": "./dist/authoring-contracts.js"
+    }
+  },
+  "scripts": {
+    "en-recalculate": "node src/recalculation-cli.ts",
+    "en-author": "node src/cli.ts",
+    "test": "node --test tests/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "build:skills": "node tooling/build-skills.mjs",
+    "validate:skills": "node tooling/validate-skills.mjs",
+    "check": "npm run typecheck && npm test && npm run build && npm run validate:skills && npm run validate:catalog && npm run validate:evals",
+    "build": "tsc -p tsconfig.build.json && npm run build:skills",
+    "prepack": "npm run build",
+    "test:package": "npm run build && node tooling/test-package.mjs",
+    "snapshot:webview": "node tooling/snapshot-webview.mjs",
+    "test:scripts": "node harness/run.mjs",
+    "test:engine:preview": "node harness/engine-preview/run.mjs",
+    "test:package:scripts": "node tooling/test-package.mjs",
+    "pretest": "npm run build:skills",
+    "test:announcements": "node harness/announcement/run.mjs",
+    "test:announcements:regression": "node tooling/test-announcement.mjs",
+    "en-image": "node src/image-cli.ts",
+    "validate:catalog": "node tooling/validate-skill-catalog.mjs",
+    "validate:evals": "node tooling/eval-cases.mjs validate",
+    "eval:prepare": "node tooling/eval-cases.mjs prepare",
+    "eval:compare": "node tooling/eval-results.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "6.0.3"
+  },
+  "main": "./dist/index.js",
+  "bundledDependencies": [
+    "@encounter-api/sdk"
+  ],
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "en-recalculate": "./dist/recalculation-cli.js",
+    "en-author": "./dist/cli.js",
+    "en-webview-snapshot": "./tooling/snapshot-webview.mjs",
+    "en-script-check": "./harness/run.mjs",
+    "en-engine-check": "./harness/engine-preview/run.mjs",
+    "en-announcement-check": "./harness/announcement/run.mjs",
+    "en-image": "./dist/image-cli.js"
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts",
+    "knowledge",
+    "README.md",
+    "harness",
+    "tooling/snapshot-webview.mjs",
+    "dist/skills",
+    "dist/knowledge",
+    "tooling/pack-webview.mjs"
+  ],
+  "dependencies": {
+    "@encounter-api/sdk": "file:vendor/encounter-api-sdk-0.1.0.tgz",
+    "esbuild": "0.28.2",
+    "fast-xml-parser": "^5.11.2",
+    "fflate": "^0.8.3",
+    "parse5": "^7.3.0",
+    "playwright": "1.63.0",
+    "sharp": "0.35.5"
+  },
+  "bundleDependencies": [
+    "@encounter-api/sdk"
+  ]
+}

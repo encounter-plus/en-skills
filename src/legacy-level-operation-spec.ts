@@ -1,0 +1,21 @@
+import type {LegacyOperationSpec} from './operation-contract.ts';
+interface Level {level_id:number;level_number:number;level_name:string}
+const positive=(value:unknown):value is number=>typeof value==='number'&&Number.isSafeInteger(value)&&value>0;
+const same=(a:unknown,b:unknown)=>JSON.stringify(a)===JSON.stringify(b);
+export const legacyLevelOperationSpec:LegacyOperationSpec={
+ definition:{type:'function',function:{name:'encounter_propose_level_operation',description:'Prepare an immutable review card for legacy level creation, deletion of an exact persistent level ID, or moving a level after another persistent ID. All changes need a human card approval and fresh complete index. Legacy observed revision is not server CAS. Unknown writes cannot be retried.',parameters:{type:'object',additionalProperties:false,properties:{action:{type:'string',enum:['create','delete','move']},levelId:{type:'integer',minimum:1},count:{type:'integer',minimum:1,maximum:20},afterLevelId:{type:'integer',minimum:1}},required:['action']}}},
+ capability:args=>args.action==='create'?'level-create':args.action==='delete'?'level-delete':'level-move',
+ validate(value){
+  if(!['create','delete','move'].includes(String(value.action))||Object.keys(value).some(key=>!['action','levelId','count','afterLevelId'].includes(key)))throw new Error('Invalid level operation');
+  if(value.action==='create'){if(!positive(value.count)||value.count>20||value.levelId!==undefined&&value.levelId!==0||value.afterLevelId!==undefined)throw new Error('Specify a count between 1 and 20');return {action:'create',levelId:0,count:value.count};}
+  if(!positive(value.levelId)||value.count!==undefined||value.action==='move'&&(!positive(value.afterLevelId)||value.afterLevelId===value.levelId)||value.action==='delete'&&value.afterLevelId!==undefined)throw new Error('Specify exact persistent level IDs');
+  return {action:value.action,levelId:value.levelId,...(value.action==='move'?{afterLevelId:Number(value.afterLevelId)}:{})};
+ },
+ async read(api,_args,signal){const response=await api.request(`/admin/games/${api.metadata.binding.gameId}/levels`,{signal});if(!response.ok)throw new Error('Level index unavailable');const index=await response.json();if(index.game_id!==api.metadata.binding.gameId||typeof index.version!=='string'||!index.version.startsWith('legacy-observed:level-index-v1:')||!Array.isArray(index.levels)||index.levels.some((row:Level)=>!positive(row.level_id)||!positive(row.level_number)))throw new Error('Complete observed level index required');return index;},
+ checkBefore(before,args){const levels=before.levels as Level[];if(args.action!=='create'&&!levels.some(row=>row.level_id===args.levelId)||args.action==='move'&&!levels.some(row=>row.level_id===args.afterLevelId))throw new Error('Level ID is outside selected game');},
+ request(api,args,before){const root=`/admin/games/${api.metadata.binding.gameId}/levels`,path=args.action==='create'?root:root+'/'+args.levelId+(args.action==='move'?'/position':'');return api.request(path,{method:args.action==='create'?'POST':args.action==='delete'?'DELETE':'PUT',headers:{'Content-Type':'application/json','X-Authoring-Expected-Revision':String(before.version)},...(args.action==='delete'?{}:{body:JSON.stringify(args.action==='create'?{count:args.count}:{after_level_id:args.afterLevelId})})});},
+ verify(before,after,args){const prior=before.levels as Level[],actual=after.levels as Level[];if(!Array.isArray(actual))return false;if(args.action==='create'){const old=new Set(prior.map(row=>row.level_id));return actual.length===prior.length+Number(args.count)&&actual.filter(row=>!old.has(row.level_id)).length===args.count&&same(actual.slice(0,prior.length),prior);}
+  const levels=prior.filter(row=>row.level_id!==args.levelId);if(args.action==='move'){const row=prior.find(row=>row.level_id===args.levelId)!;levels.splice(levels.findIndex(row=>row.level_id===args.afterLevelId)+1,0,row);}return same(levels.map((row,index)=>({...row,level_number:index+1})),actual);
+ },
+ riskReason:'Review level order, count and stable IDs. Deletion removes all contents of that level. Live state is unknown; legacy preflight and read-back do not provide server CAS.',
+};

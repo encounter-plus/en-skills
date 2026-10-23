@@ -1,0 +1,25 @@
+{
+  "name": "en-skills",
+  "version": "0.2.0",
+  "description": "Tools and guidance for reviewing and safely editing Encounter games.",
+  "author": {
+    "name": "EN Skills contributors"
+  },
+  "skills": "./dist/skills/",
+  "interface": {
+    "displayName": "Encounter Game Author",
+    "shortDescription": "Review and safely edit Encounter games.",
+    "longDescription": "Reviews Russian game content and helps authors edit Encounter and Points games through a guarded local MCP runtime.",
+    "developerName": "EN Skills contributors",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Review this Encounter game.",
+      "Move this hint safely.",
+      "Check this task and its script."
+    ]
+  }
+}

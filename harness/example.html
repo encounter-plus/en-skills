@@ -1,0 +1,20 @@
+<style>
+.author-demo {padding:18px;border:2px solid #287f88;border-radius:12px;margin-bottom:80px}
+.author-demo button {padding:12px} #author-result {display:block;min-height:2em}
+</style>
+<section class="author-demo">
+<h3>Синтетическое задание</h3><p>Проверка отправки кода и обновления сектора.</p>
+<button id="author-answer" type="button">Ввести тестовый код</button>
+<output id="author-result">Загрузка…</output>
+</section>
+<script>
+EN.ready.then(()=>{
+  document.querySelector('#author-result').textContent='Готово';
+  document.querySelector('#author-answer').onclick=async()=>{
+    try{const result=await EN.answer('SYNTHETIC-OK');document.querySelector('#author-result').textContent=result.ok===true?'Принято':result.ok===false?'Ошибка':'Не проверено';}
+    catch(e){document.querySelector('#author-result').textContent='Сеть недоступна';}
+  };
+});
+</script>
+
+<input id="keyboard-probe" onkeydown="document.getElementById('keyboard-result').textContent=event.key"><output id="keyboard-result"></output>

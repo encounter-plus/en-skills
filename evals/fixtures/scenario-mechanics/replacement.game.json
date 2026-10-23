@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "gameId": "synthetic-mechanics",
+  "domain": "synthetic.invalid",
+  "title": "Учебный стенд",
+  "phase": "draft",
+  "format": "field",
+  "levels": [
+    {
+      "id": "L1",
+      "title": "Карточки",
+      "kind": "search",
+      "task": "Найдите 10 карточек. Ещё 3 кода выдаются подсказками. Прохождение по любым 10 из 13. ФО: слово12.",
+      "answerFormat": "слово12",
+      "autoPassSeconds": 1800,
+      "requiredSectors": 10,
+      "playersStarted": false,
+      "sectors": [
+        {
+          "id": "S1",
+          "answers": [
+            "учебный01"
+          ]
+        },
+        {
+          "id": "S2",
+          "answers": [
+            "учебный02"
+          ]
+        },
+        {
+          "id": "S3",
+          "answers": [
+            "учебный03"
+          ]
+        },
+        {
+          "id": "S4",
+          "answers": [
+            "учебный04"
+          ]
+        },
+        {
+          "id": "S5",
+          "answers": [
+            "учебный05"
+          ]
+        },
+        {
+          "id": "S6",
+          "answers": [
+            "учебный06"
+          ]
+        },
+        {
+          "id": "S7",
+          "answers": [
+            "учебный07"
+          ]
+        },
+        {
+          "id": "S8",
+          "answers": [
+            "учебный08"
+          ]
+        },
+        {
+          "id": "S9",
+          "answers": [
+            "учебный09"
+          ]
+        },
+        {
+          "id": "S10",
+          "answers": [
+            "учебный10"
+          ]
+        },
+        {
+          "id": "S11",
+          "answers": [
+            "учебный11"
+          ]
+        },
+        {
+          "id": "S12",
+          "answers": [
+            "учебный12"
+          ]
+        },
+        {
+          "id": "S13",
+          "answers": [
+            "учебный13"
+          ]
+        }
+      ],
+      "helps": [
+        {
+          "id": "H1",
+          "text": "Код замены: учебный11",
+          "afterSeconds": 600
+        },
+        {
+          "id": "H2",
+          "text": "Код замены: учебный12",
+          "afterSeconds": 900
+        },
+        {
+          "id": "H3",
+          "text": "Код замены: учебный13",
+          "afterSeconds": 1200
+        }
+      ]
+    }
+  ]
+}

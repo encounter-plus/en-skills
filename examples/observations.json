@@ -1,0 +1,16 @@
+[
+  {
+    "id": "synthetic-observation-001",
+    "image": "synthetic-reading-example-no-real-photo",
+    "gameId": "synthetic-game-001",
+    "domain": "synthetic.invalid",
+    "levelId": "synthetic-level-001",
+    "sectorId": "synthetic-sector-001",
+    "reading": "clear",
+    "transcription": "конь6",
+    "alternatives": [],
+    "mappingVerified": true,
+    "currentMarkingVerified": true,
+    "documentCode": "конь6"
+  }
+]

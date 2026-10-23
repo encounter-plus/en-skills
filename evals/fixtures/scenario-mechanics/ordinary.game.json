@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "gameId": "synthetic-mechanics",
+  "domain": "synthetic.invalid",
+  "title": "Учебный стенд",
+  "phase": "draft",
+  "format": "field",
+  "levels": [
+    {
+      "id": "L1",
+      "title": "Обычный поиск",
+      "kind": "search",
+      "task": "Найдите 2 кода. ФО: слово12.",
+      "answerFormat": "слово12",
+      "autoPassSeconds": 1800,
+      "requiredSectors": 2,
+      "playersStarted": false,
+      "sectors": [
+        {
+          "id": "S1",
+          "answers": [
+            "учебный01"
+          ]
+        },
+        {
+          "id": "S2",
+          "answers": [
+            "учебный02"
+          ]
+        }
+      ],
+      "helps": []
+    }
+  ]
+}

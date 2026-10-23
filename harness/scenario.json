@@ -1,0 +1,125 @@
+{
+  "state": {
+    "game": {
+      "id": 900001,
+      "number": 1,
+      "title": "Synthetic game",
+      "zoneId": 1,
+      "sequence": 1
+    },
+    "team": {
+      "id": 900002,
+      "name": "Synthetic team",
+      "userId": 900003,
+      "login": "SyntheticPlayer"
+    },
+    "level": {
+      "id": 900004,
+      "number": 1,
+      "name": "Synthetic level",
+      "startedAt": 0,
+      "deadlineAt": null,
+      "isPassed": false,
+      "isDismissed": false,
+      "sectorsLeft": 1,
+      "sectors": [
+        {
+          "id": 900005,
+          "name": "Synthetic sector",
+          "isAnswered": false,
+          "answer": null,
+          "answeredBy": null,
+          "answeredAt": null
+        }
+      ],
+      "helps": [],
+      "bonuses": []
+    },
+    "levels": [
+      {
+        "id": 900004,
+        "number": 1,
+        "name": "Synthetic level",
+        "isPassed": false,
+        "isCurrent": true
+      }
+    ]
+  },
+  "sectors": [
+    {
+      "id": 900005,
+      "order": 1,
+      "name": "Synthetic sector",
+      "isAnswered": false,
+      "answer": null
+    }
+  ],
+  "responses": [
+    {
+      "code": "SYNTHETIC-OK",
+      "ok": true,
+      "sectorId": 900005
+    },
+    {
+      "code": "SYNTHETIC-UNKNOWN",
+      "ok": null
+    },
+    {
+      "code": "SYNTHETIC-DELAY",
+      "ok": true,
+      "delayMs": 150
+    },
+    {
+      "code": "SYNTHETIC-NETWORK",
+      "httpStatus": 503
+    }
+  ],
+  "steps": [
+    {
+      "press": {
+        "selector": "#keyboard-probe",
+        "key": "Enter"
+      },
+      "expectText": {
+        "selector": "#keyboard-result",
+        "text": "Enter"
+      }
+    },
+    {
+      "click": "#author-answer",
+      "expectText": {
+        "selector": "#author-result",
+        "text": "Принято"
+      },
+      "expectOk": true
+    },
+    {
+      "code": "SYNTHETIC-WRONG",
+      "expectOk": false
+    },
+    {
+      "code": "SYNTHETIC-UNKNOWN",
+      "expectOk": null
+    },
+    {
+      "code": "SYNTHETIC-DELAY",
+      "expectOk": true
+    },
+    {
+      "code": "SYNTHETIC-NETWORK",
+      "expectError": true
+    },
+    {
+      "form": "[data-en=\"answer-form\"]",
+      "code": "SYNTHETIC-OK",
+      "directSubmit": true,
+      "expectOk": true
+    },
+    {
+      "form": "[data-en=\"bonus-form\"]",
+      "code": "SYNTHETIC-WRONG",
+      "directSubmit": true,
+      "expectOk": false
+    }
+  ]
+}

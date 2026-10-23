@@ -1,0 +1,30 @@
+{
+  "name": "@en-skills/encounter-agent-runtime",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "bin": {
+    "encounter-agent": "./dist/cli.mjs"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts",
+    "test:mcp": "node scripts/mcp-smoke.mjs",
+    "contract:live": "tsx scripts/live-contract-smoke.ts",
+    "validate": "pnpm typecheck && pnpm test && pnpm build && pnpm test:mcp"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
+    "zod": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0"
+  }
+}

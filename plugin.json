@@ -1,0 +1,15 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "en-skills",
+  "version": "0.2.0",
+  "description": "Review and safely edit Encounter games with portable Agent Skills and a local MCP server.",
+  "author": {
+    "name": "EN Skills contributors"
+  },
+  "keywords": [
+    "encounter",
+    "game-authoring",
+    "agent-skills",
+    "mcp"
+  ]
+}

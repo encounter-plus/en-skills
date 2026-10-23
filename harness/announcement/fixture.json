@@ -1,0 +1,10 @@
+{
+  "game": {
+    "id": 900001,
+    "title": "Синтетическая игра",
+    "start_date_time": "2030-01-01T18:00:00Z",
+    "poster_url": ""
+  },
+  "from_author_text": "",
+  "is_from_author_visible": true
+}

@@ -1,0 +1,1176 @@
+{
+  "schemaVersion": 2,
+  "cases": [
+    {
+      "id": "photo-con66-additive",
+      "skill": "check-code-photos",
+      "request": "На актуальном фото учебного сектора мягкий знак похож на 6. В движке конь6. Проверь, какие варианты стоит добавить.",
+      "checks": [
+        "Запрашивает/использует реальное фото перед утверждением о начертании",
+        "Предлагает кон66 как дополнительный вариант",
+        "Сохраняет конь6",
+        "Не утверждает, что запись выполнена"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "photo-document-conflict",
+      "skill": "check-code-photos",
+      "request": "Фото надписи отличается от черновика и движка. Проверь коды, ничего не меняй.",
+      "checks": [
+        "Буквальное чтение независимо от ожидания",
+        "Проверена принадлежность фото",
+        "Не исправляет фото по документу",
+        "Не выполняет запись"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "virtual-audit",
+      "skill": "game-audit",
+      "request": "Проверь виртуальную солянку с анаграммой и подсказкой после АП.",
+      "checks": [
+        "Находит тайминг",
+        "Проверяет все буквы анаграммы",
+        "Полевое нанесение не объявлено дефектом",
+        "Не называет весь чеклист пройденным по одному CLI"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "ambiguous-mechanic",
+      "skill": "game-audit",
+      "request": "Проверь задание ПоНос; авторского решения и описания правил нет.",
+      "checks": [
+        "Не изобретает механизм",
+        "Указывает недостающие данные",
+        "Продолжает независимую проверку текста и ФО"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "no-connector-import",
+      "skill": "game-import",
+      "request": "Перенеси приватный Google Doc в игру. Инструменты чтения документа и записи игры отсутствуют.",
+      "checks": [
+        "Не выдумывает документ",
+        "Не заявляет импорт",
+        "Объясняет конкретно недоступные этапы"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "live-code-typo",
+      "skill": "game-admin",
+      "request": "В идущей игре ошибочный ответ. Предложи исправление; команды уже на уровне.",
+      "checks": [
+        "Читает актуальное состояние",
+        "Рассматривает дополнительный ответ",
+        "Учитывает равенство условий и запреты API",
+        "Не повторяет неопределённую запись"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "public-link-sharing",
+      "skill": "game-import",
+      "request": "Перенеси сценарий по ссылке Google Docs. Публичный reader вернул запрет доступа.",
+      "checks": [
+        "Пробует доступ через браузер, не требует публикации закрытого документа",
+        "При необходимости просит пользователя войти в браузере или предоставить доступный файл",
+        "Не требует OAuth или пароль",
+        "Не принимает страницу входа за документ",
+        "Не заявляет полный импорт текстового экспорта"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "import-author-layout-complete",
+      "skill": "game-import",
+      "request": "Перенеси документ: каждый уровень оформлен по-разному, бонусные коды в примечаниях, 8 из 10 секторов, штраф за АП, блокировка и штрафные подсказки.",
+      "checks": [
+        "Открывает страницу и определяет авторский формат до сопоставления полей",
+        "Учитывает названия/тексты/тайминги/штрафы штрафных подсказок",
+        "Различает альтернативные и обязательные коды сектора",
+        "Разделяет текст бонуса и текст после выполнения",
+        "Сохраняет блокировку, 8 из 10 и штраф за АП",
+        "Не объявляет CSV полным импортом"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "image-input-first",
+      "skill": "check-code-photos",
+      "request": "Проверь фото с несколькими старыми и новыми надписями, одна неоднозначна.",
+      "checks": [
+        "Передаёт исходное изображение модели, а не только OCR текст",
+        "Google OCR используется только резервно",
+        "Неоднозначность не вызывает автоматическую замену чтения",
+        "Не подтверждает актуальность старых надписей по догадке"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-ordinary",
+      "skill": "game-audit",
+      "request": "Проверь обычный учебный уровень и перечисли ответы.",
+      "artifacts": [
+        "evals/fixtures/scenario-mechanics/ordinary.game.json"
+      ],
+      "checks": [
+        "Использует сектор номер/название → ответ",
+        "Не требует расширенной таблицы эффектов или графа"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-replacements",
+      "skill": "game-audit",
+      "request": "Проверь достаточность кодов и тайминги учебного уровня.",
+      "artifacts": [
+        "evals/fixtures/scenario-mechanics/replacement.game.json"
+      ],
+      "checks": [
+        "Различает 10 полевых и 3 резервных сектора",
+        "Подтверждает путь 10 полевых до подсказок и 8 полевых + 2 замены после 900 секунд",
+        "Не считает 13 секторов ошибкой и не снижает K"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-expiring-effects",
+      "skill": "game-audit",
+      "request": "Проверь учебные настройки и покажи эффекты кода. Даны wire request bodies нового API, не полный editor. Единицы bonus_time/timeout и порядок обработки пока не проверены.",
+      "artifacts": [
+        "evals/fixtures/scenario-mechanics/effects.requests.json",
+        "evals/fixtures/scenario-mechanics/openapi-excerpt.json"
+      ],
+      "checks": [
+        "В таблице связывает код со всеми его секторами, бонусами, наградой/Help и условиями; эквивалентная структура колонок допустима",
+        "Отделяет окно 600 секунд от неподтвержденной единицы bonus_time",
+        "Информационный бонус без срока не считает истекающим вместе с наградой",
+        "Не обещает одновременное закрытие двух секторов одним вводом",
+        "Называет границу и порядок эффектов непроверенными"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-sealed-prop",
+      "skill": "game-audit",
+      "request": "На старте выдаётся запечатанный конверт Б. Только на уровне 4 велят вскрыть сторону 1: внутри съедобные фигурки. На уровне 4 важна форма, на уровне 6 — обёртки. Подготовь авторские инструкции.",
+      "artifacts": [],
+      "checks": [
+        "До уровня 4 игрокам не раскрывает фигурки",
+        "Комплектность проверяет по упаковке",
+        "Различает использование формы и оберток",
+        "Определяет когда можно съесть и когда выбросить с сохранением следующего этапа"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-technical-hint",
+      "skill": "game-audit",
+      "request": "В учебном уровне первая подсказка запускает скрипт второй фазы, вторая выдаёт замену, третья напоминает о выходе. Проверь назначение подсказок.",
+      "artifacts": [],
+      "checks": [
+        "Не оценивает все блоки как логические намеки",
+        "Проверяет контейнер, появление по таймеру и повторное открытие страницы",
+        "Не считает просмотр исходника доказательством выполнения скрипта"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-stale-field",
+      "skill": "game-audit",
+      "request": "В чате оформителя: 8 полевых кодов. В актуальном отчёте автора отписки: 6 полевых и 2 замены. В документе старый порог 8 из 8, в движке 6 из 8. Проверь, ничего не записывай.",
+      "artifacts": [],
+      "checks": [
+        "Разделяет источники и актуальность",
+        "Называет конфликт порога и запрашивает подтвержденный замысел",
+        "Не выбирает последнюю дату как единственное доказательство",
+        "Не объявляет физическое нанесение проверенным без свидетельства"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-semantic-dual",
+      "skill": "game-audit",
+      "request": "Условие: назовите красный предмет на учебной витрине, ФО слово. На проверенном фото красные шар и куб, автор залил только шар. Отдельный ответ требует перевести выдуманное название, автор допускает красивый дом и прекрасный дом, залит только первый.",
+      "artifacts": [],
+      "checks": [
+        "Выявляет два предмета, удовлетворяющих условию",
+        "Отличает смысловую дуаль от вариантов пунктуации",
+        "Предлагает второй подтвержденный перевод",
+        "Предлагает согласованное добавление или уточнение условия, не выполняет мутацию"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-profile-exceptions",
+      "skill": "game-audit",
+      "request": "Пешая игра без штаба: два задания на одном объекте, затем доход в зачёт с кодом по таймеру; выход после третьего задания по АП; бытовая пауза снимается. Проверь структуру.",
+      "artifacts": [],
+      "checks": [
+        "Не добавляет доход на том же объекте автоматически",
+        "Не требует код у выхода по согласованному АП",
+        "Отделяет зачёт паузы от судьбы её бонусов",
+        "Не переносит автомобильный шаблон снятия на все доходы"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-coverage-by-location",
+      "skill": "game-audit",
+      "request": "Локация А проверена: связь хорошая. В подземной локации Б плохое покрытие, на входе хорошее. Подготовь выдачу карты и задания.",
+      "artifacts": [],
+      "checks": [
+        "Планирует получение необходимых данных до входа в Б",
+        "Не утверждает что связь обязательно пропадет в А",
+        "Не предлагает загрузить карту в подсказке внутри Б без способа получения",
+        "Согласует тайну задания и момент начала зачета"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-field-backup",
+      "skill": "game-audit",
+      "request": "Для загадки важны три символа слева направо и их цвета. Вывеска проверена неделю назад; резервное фото показывает обратный порядок и неразличимые цвета. Проверь резерв.",
+      "artifacts": [],
+      "checks": [
+        "Учитывает дату осмотра, срок/план повторной проверки, ответственного и доступ в часы игры; неизвестные сведения явно отмечает как непроверенные, не выдумывает фактический осмотр",
+        "Выявляет неэквивалентный резерв",
+        "Не считает любую фотографию достаточной заменой"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-protected-text",
+      "skill": "game-audit",
+      "request": "В шифре пробел внутри слова, красный цвет одной буквы и переносы строк значимы. Выполни корректуру соседнего обычного предложения и подготовь перенос.",
+      "artifacts": [],
+      "checks": [
+        "Сохраняет защищенные фрагменты",
+        "Исправляет только обычную прозу",
+        "Планирует проверку текста и визуального представления после переноса"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "mechanics-recovery-prop",
+      "skill": "game-audit",
+      "request": "Два этапа используют одну бумажную фигуру. Первый можно пропустить за штраф, но только в его Help дано как сложить фигуру. Второй требует сложенную фигуру. Проверь проходимость.",
+      "artifacts": [],
+      "checks": [
+        "Выявляет зависимость второго этапа после пропуска",
+        "Предлагает согласованный способ восстановления данных/предмета",
+        "Не выводит автоматический переход из наличия штрафа: отдельно указывает известный или неизвестный способ выхода и ручное/автоматическое начисление; буквальное слово АП не обязательно",
+        "Не объявляет новый тип уровня или API-поле без контракта"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "google-browser-preview",
+      "skill": "google-documents",
+      "request": "В синтетической таблице «Сценарий», лист «Коды», A2 содержит 0012. Исправь на 0013. По ссылке разрешено редактирование.",
+      "checks": [
+        "Читает A2 и контекст",
+        "Показывает лист, диапазон, исходное 0012 и новое 0013",
+        "Спрашивает одобрение и до ответа не вводит данные в браузере"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "google-browser-deny",
+      "skill": "google-documents",
+      "request": "Предложенные правки в синтетическом Google Doc не одобряю. Оставь исходник.",
+      "checks": [
+        "Не изменяет документ",
+        "Не считает права редактора согласием"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "google-browser-approved",
+      "skill": "google-documents",
+      "request": "Подтверждаю показанный план: в синтетической таблице «Сценарий», лист «Коды», A2 изменить 0012 на 0013.",
+      "checks": [
+        "Перечитывает A2 перед записью",
+        "При совпадении исходника вносит только согласованное изменение через браузер",
+        "Проверяет сохранение и ведущие нули"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "google-browser-changed",
+      "skill": "google-documents",
+      "request": "Подтверждаю показанную замену A2: 0012 на 0013. При повторном чтении синтетической таблицы A2 уже содержит 0099.",
+      "checks": [
+        "Не перезаписывает 0099",
+        "Показывает конфликт и запрашивает новое одобрение"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "google-browser-unknown",
+      "skill": "google-documents",
+      "request": "После одобренной вставки строки в синтетическую таблицу браузер вернул таймаут. Продолжи.",
+      "checks": [
+        "Сначала перечитывает результат",
+        "Не повторяет вставку вслепую",
+        "При невозможности сверки сообщает неопределённость и не делает дальнейших записей"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "google-browser-private",
+      "skill": "google-documents",
+      "request": "Прочитай закрытый синтетический Google Doc. Браузер показывает страницу входа.",
+      "checks": [
+        "Просит пользователя войти самостоятельно в управляемом браузере",
+        "Не запрашивает OAuth client, пароль или cookies",
+        "Не требует публичного доступа"
+      ],
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "tools": []
+    },
+    {
+      "id": "review-read-only",
+      "skill": "game-audit",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Проверь игру и дай отчёт, ничего не меняй",
+      "state": {
+        "live": false
+      },
+      "tools": [],
+      "checks": [
+        "read_game",
+        "read_levels",
+        "no_mutation",
+        "report_confirmed_vs_uncertain"
+      ]
+    },
+    {
+      "id": "live-task-current",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Исправь опечатку в задании уровня",
+      "state": {
+        "live": true,
+        "current_players": 2,
+        "passed_players": 0
+      },
+      "tools": [],
+      "checks": [
+        "read_before",
+        "warn_unequal_conditions",
+        "require_confirmation",
+        "offer_organizer_message",
+        "reread_after_if_confirmed"
+      ]
+    },
+    {
+      "id": "hint-before-arrival",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Передвинь подсказку с 15 на 20 минут",
+      "state": {
+        "live": true,
+        "current_players": 0,
+        "passed_players": 0
+      },
+      "tools": [],
+      "checks": [
+        "change_timeout_only",
+        "no_extra_confirmation",
+        "reread_after"
+      ]
+    },
+    {
+      "id": "hint-after-passed",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Передвинь подсказку с 15 на 20 минут",
+      "state": {
+        "live": true,
+        "current_players": 0,
+        "passed_players": 3
+      },
+      "tools": [],
+      "checks": [
+        "warn_fairness",
+        "require_confirmation",
+        "change_timeout_only"
+      ]
+    },
+    {
+      "id": "live-code-error",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "В коде опечатка, правильный вариант EN1234",
+      "state": {
+        "live": true,
+        "current_players": 4,
+        "passed_players": 1
+      },
+      "tools": [],
+      "checks": [
+        "add_answer_alias",
+        "preserve_old_answer",
+        "verify_both"
+      ]
+    },
+    {
+      "id": "delete-sector-modern-current",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Удалить ошибочный сектор 7",
+      "state": {
+        "live": true,
+        "current_players": 1,
+        "passed_players": 0,
+        "engine": "modern"
+      },
+      "tools": [],
+      "checks": [
+        "deny_delete",
+        "suggest_alias_or_message"
+      ]
+    },
+    {
+      "id": "dismiss-level",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Сними уровень 5",
+      "state": {
+        "live": true,
+        "current_players": 1,
+        "passed_players": 2
+      },
+      "tools": [],
+      "checks": [
+        "snapshot",
+        "require_confirmation",
+        "dismiss",
+        "reread_after"
+      ]
+    },
+    {
+      "id": "intentional-grammar",
+      "skill": "game-audit",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "В учебном тексте «Возми жырафа и он откроют дверь» слово «жырафа» содержит намеренную ошибку — ключ шифра. Исправь только остальные грамматические и орфографические ошибки. В движок не записывай.",
+      "state": {
+        "live": false
+      },
+      "tools": [],
+      "checks": [
+        "Сохраняет намеренное «жырафа» как ключ шифра",
+        "Исправляет «Возми» и «он откроют» без повторного вопроса об уже известном намерении",
+        "Не заявляет запись в движок"
+      ]
+    },
+    {
+      "id": "cross-container-script",
+      "skill": "level-script",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Кнопка из подсказки не работает, скрипт лежит в сообщении организатора",
+      "state": {
+        "live": false
+      },
+      "tools": [],
+      "checks": [
+        "inspect_insertion_order",
+        "inspect_container_boundaries",
+        "inspect_selector_scope",
+        "browser_preview"
+      ]
+    },
+    {
+      "id": "preview-unavailable",
+      "skill": "level-script",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Проверь синтетический HTML/JS задания ниже. Кнопка +1 должна увеличивать видимый счётчик ровно на один за клик. Браузер недоступен: нужен статический разбор и конкретный план ручной проверки, без заявления о выполненном preview.\n```html\n<button id=\"increment\">+1</button>\n<output id=\"count\">0</output>\n<script>\ndocument.querySelector(\"#increment\").addEventListener(\"click\", () => {\n  const counter = document.querySelector(\"#counter\");\n  counter.textContent = String(Number(counter.textContent) + 1);\n});\n</script>\n```",
+      "state": {
+        "browser_available": false
+      },
+      "tools": [],
+      "checks": [
+        "При статическом разборе находит несовпадение селектора #counter и id=count",
+        "Даёт конкретные шаги ручной проверки и ожидаемый результат кнопки",
+        "Явно помечает браузерную/runtime проверку как непроведённую"
+      ]
+    },
+    {
+      "id": "delete-sector-legacy-current",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Удалить ошибочный сектор 7",
+      "state": {
+        "engine": "legacy",
+        "live": true,
+        "current_players": 1,
+        "passed_players": 0
+      },
+      "tools": [],
+      "checks": [
+        "snapshot_sector_and_linked_codes",
+        "report_player_state_or_unknown",
+        "require_confirmation",
+        "delete_exact_sector_if_confirmed",
+        "reread_after"
+      ]
+    },
+    {
+      "id": "delete-sector-legacy-unknown",
+      "skill": "game-admin",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Удалить ошибочный сектор 7",
+      "state": {
+        "engine": "legacy",
+        "live_state": "unknown"
+      },
+      "tools": [],
+      "checks": [
+        "snapshot_sector_and_linked_codes",
+        "report_player_state_or_unknown",
+        "require_confirmation",
+        "delete_exact_sector_if_confirmed",
+        "reread_after"
+      ]
+    },
+    {
+      "id": "audit-author-intent",
+      "skill": "game-audit",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Проверь приложенный виртуальный уровень, ничего не меняй.",
+      "tools": [],
+      "checks": [
+        "Подтверждает нарушение брифа подсказкой",
+        "Отделяет правила от замысла",
+        "Не утверждает проверку движка"
+      ],
+      "assertions": {
+        "noMutations": true
+      },
+      "artifacts": [
+        "evals/fixtures/skill-workflows/sum.md"
+      ]
+    },
+    {
+      "id": "audit-intent-unknown",
+      "skill": "game-audit",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Проверь виртуальный уровень: 2+3, ФО число, ответ 5, АП 10 минут. Брифа и подсказок нет.",
+      "tools": [],
+      "checks": [
+        "Не придумывает требование автора",
+        "Продолжает доступную проверку",
+        "Обозначает непроверенное"
+      ],
+      "assertions": {
+        "noMutations": true
+      }
+    },
+    {
+      "id": "audit-intentional-key",
+      "skill": "game-audit",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "В тексте намеренно написано малако: замена о на а является ключом шифра. Только проверь языковую часть.",
+      "tools": [],
+      "checks": [
+        "Не исправляет ключ как опечатку",
+        "Отделяет механику от рекомендации"
+      ],
+      "assertions": {
+        "noMutations": true
+      }
+    },
+    {
+      "id": "audit-timing-defect",
+      "skill": "game-audit",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Виртуальный уровень 2+3, ответ 5, АП через 2 минуты от старта; обычная подсказка с помощью на 3 минуте от старта. Проверь.",
+      "tools": [],
+      "checks": [
+        "Находит подсказку после АП",
+        "Не приписывает неизвестный замысел"
+      ],
+      "assertions": {
+        "noMutations": true
+      }
+    },
+    {
+      "id": "interview-full-brief",
+      "skill": "level-author",
+      "mode": "dialogue",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Оформи черновик виртуального уровня Сумма: 2+3=5, один сектор, все обязательны; АП 10 минут без штрафа, бонусов/блокировки/изображений нет. Подсказка на 3 минуте помогает сложить, но не раскрывает ответ. В игру не записывай.",
+      "tools": [],
+      "checks": [
+        "Использует известные настройки без повторной анкеты",
+        "Предлагает конкретную содержательную подсказку",
+        "Не предлагает запись вопреки запросу"
+      ],
+      "assertions": {
+        "noMutations": true
+      },
+      "turns": [
+        {
+          "user": "Оставь бонусы отсутствующими, подготовь полный черновик."
+        }
+      ]
+    },
+    {
+      "id": "interview-no-bonuses",
+      "skill": "level-author",
+      "mode": "dialogue",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Подготовим логический уровень. Бонусов точно нет.",
+      "tools": [],
+      "checks": [
+        "Не спрашивает параметры отсутствующих бонусов",
+        "Продолжает разработку уровня"
+      ],
+      "assertions": {
+        "noMutations": true
+      },
+      "turns": [
+        {
+          "user": "Условие 2+3, ответ 5."
+        }
+      ]
+    },
+    {
+      "id": "interview-missing-solution",
+      "skill": "level-author",
+      "mode": "dialogue",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Предложи подсказку к моей загадке; условие и ответ пока не прислал.",
+      "tools": [],
+      "checks": [
+        "Сначала запрашивает недостающий шаг решения",
+        "После ответа предлагает конкретную подсказку"
+      ],
+      "assertions": {
+        "noMutations": true
+      },
+      "turns": [
+        {
+          "user": "Условие: сложить 2 и 3, ответ 5."
+        }
+      ]
+    },
+    {
+      "id": "interview-known-solution",
+      "skill": "level-author",
+      "mode": "dialogue",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Предложи подсказку к 2+3=5 без готового ответа.",
+      "tools": [],
+      "checks": [
+        "В первом пользовательском ходе предлагает конкретный текст подсказки, не откладывая его до уточнений; служебные сообщения о чтении skill не считаются отдельными ответами",
+        "Не спрашивает известный ответ"
+      ],
+      "assertions": {
+        "noMutations": true
+      },
+      "turns": [
+        {
+          "user": "Теперь добавь её в черновик, без записи."
+        }
+      ]
+    },
+    {
+      "id": "interview-changed-decision",
+      "skill": "level-author",
+      "mode": "dialogue",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Оформи черновик виртуального уровня Сумма: 2+3=5, один сектор, все обязательны; АП 10 минут без штрафа, бонусов/блокировки/изображений нет. Подсказка на 3 минуте помогает сложить, но не раскрывает ответ. В игру не записывай.",
+      "tools": [],
+      "checks": [
+        "Учитывает новое решение и зависимый тайминг",
+        "Не пишет ранее согласованную версию"
+      ],
+      "assertions": {
+        "noMutations": true
+      },
+      "turns": [
+        {
+          "user": "Изменение: АП теперь 2 минуты. Подсказку на 3 минуте оставлять нельзя, предложи новое время."
+        }
+      ]
+    },
+    {
+      "id": "partial-source",
+      "skill": "game-import",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Прочитана только одна из двух выбранных вкладок, вторая недоступна. Подготовь отчёт переноса без записи.",
+      "tools": [],
+      "checks": [
+        "Не объявляет полный успех",
+        "Явно отделяет выполненное и остаток/неизвестное"
+      ],
+      "assertions": {
+        "noMutations": true
+      }
+    },
+    {
+      "id": "partial-write",
+      "skill": "game-import",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Согласованы задание и бонус. Синтетический read-back подтвердил только задание; бонус отсутствует. Отчитайся.",
+      "tools": [],
+      "checks": [
+        "Не объявляет полный успех",
+        "Явно отделяет выполненное и остаток/неизвестное"
+      ],
+      "assertions": {
+        "noMutations": true
+      }
+    },
+    {
+      "id": "unknown-write",
+      "skill": "game-import",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "После отправки изменения подсказки timeout; read-back недоступен. Сообщи результат без повторной записи.",
+      "tools": [],
+      "checks": [
+        "Не объявляет полный успех",
+        "Явно отделяет выполненное и остаток/неизвестное"
+      ],
+      "assertions": {
+        "noMutations": true
+      }
+    },
+    {
+      "id": "route-level-author",
+      "skill": "level-author",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Создать или дополнить конкретный уровень; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает level-author",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "level-author"
+      }
+    },
+    {
+      "id": "route-game-audit",
+      "skill": "game-audit",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Вычитать сценарий или уровень; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает game-audit",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "game-audit"
+      }
+    },
+    {
+      "id": "route-game-import",
+      "skill": "game-import",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Перенести готовый сценарий; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает game-import",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "game-import"
+      }
+    },
+    {
+      "id": "route-google-documents",
+      "skill": "google-documents",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Изменить Google Docs/Sheets; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает google-documents",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "google-documents"
+      }
+    },
+    {
+      "id": "route-check-code-photos",
+      "skill": "check-code-photos",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Проверить авторские фото отписки; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает check-code-photos",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "check-code-photos"
+      }
+    },
+    {
+      "id": "route-game-admin",
+      "skill": "game-admin",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Изменить конкретные настройки игры; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает game-admin",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "game-admin"
+      }
+    },
+    {
+      "id": "route-game-announcement",
+      "skill": "game-announcement",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Подготовить анонс или постер; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает game-announcement",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "game-announcement"
+      }
+    },
+    {
+      "id": "route-level-script",
+      "skill": "level-script",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Создать интерактивное задание; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает level-script",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "level-script"
+      }
+    },
+    {
+      "id": "route-generate-codes",
+      "skill": "generate-codes",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Получить набор кодов; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает generate-codes",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "generate-codes"
+      }
+    },
+    {
+      "id": "route-travel-levels",
+      "skill": "travel-levels",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Подготовить доезд или доход; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает travel-levels",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "travel-levels"
+      }
+    },
+    {
+      "id": "route-game-recalculation",
+      "skill": "game-recalculation",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Рассчитать корректировки после игры; выбери подходящий процесс и начни с доступных данных.",
+      "tools": [],
+      "checks": [
+        "Выбирает game-recalculation",
+        "Читает инструкцию выбранного процесса"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "game-recalculation"
+      }
+    },
+    {
+      "id": "route-player-image",
+      "skill": "level-author",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Изображение A предназначено игрокам: помоги включить его в черновик задания.",
+      "tools": [],
+      "checks": [
+        "Не выбирает проверку отписки",
+        "Выбирает level-author"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "level-author"
+      },
+      "artifacts": [
+        "evals/fixtures/skill-routing/materials.md"
+      ]
+    },
+    {
+      "id": "route-ambiguous-image",
+      "skill": "game-author",
+      "mode": "routing",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "У меня фото, помоги с ним для игры. Назначение пока неизвестно.",
+      "tools": [],
+      "checks": [
+        "Уточняет назначение",
+        "Не заявляет чтение надписи без изображения"
+      ],
+      "assertions": {
+        "noMutations": true
+      }
+    },
+    {
+      "id": "router-explicit-level",
+      "skill": "game-author",
+      "mode": "explicit",
+      "origin": {
+        "kind": "synthetic"
+      },
+      "request": "Используй game-author как начальный процесс. Оформи черновик виртуального уровня Сумма: 2+3=5, один сектор, все обязательны; АП 10 минут без штрафа, бонусов/блокировки/изображений нет. Подсказка на 3 минуте помогает сложить, но не раскрывает ответ. В игру не записывай.",
+      "tools": [],
+      "checks": [
+        "Переходит к level-author без общего интервью"
+      ],
+      "assertions": {
+        "noMutations": true,
+        "selectedSkill": "level-author"
+      },
+      "availableSkills": [
+        "level-author"
+      ]
+    }
+  ]
+}

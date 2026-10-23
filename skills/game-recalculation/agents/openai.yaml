@@ -1,0 +1,4 @@
+interface:
+  display_name: "Пересчёт Encounter"
+  short_description: "Разобрать мониторинг и подтвердить корректировки"
+  default_prompt: "Используй $game-recalculation, чтобы помочь пересчитать результаты после игры."

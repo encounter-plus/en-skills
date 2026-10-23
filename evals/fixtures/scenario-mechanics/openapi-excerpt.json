@@ -1,0 +1,208 @@
+{
+  "source": "https://api.en.cx/swagger/doc.json",
+  "fetchedAt": "2026-10-07T00:15:28.153Z",
+  "upstreamSha256": "f58f5f669f48569d7866889a9927f0ed7b17d88cf250c285bed9e57edf540c0b",
+  "swagger": "2.0",
+  "definitions": {
+    "models.AdminAnswerRequest": {
+      "type": "object",
+      "properties": {
+        "answer_text": {
+          "type": "string"
+        },
+        "for_member_id": {
+          "type": "integer"
+        },
+        "score_award": {
+          "type": "integer"
+        },
+        "sector_id": {
+          "type": "integer"
+        },
+        "time_award": {
+          "type": "integer"
+        }
+      }
+    },
+    "models.AdminBonusRequest": {
+      "type": "object",
+      "properties": {
+        "all_levels": {
+          "description": "rbAllLevels",
+          "type": "boolean"
+        },
+        "answers": {
+          "description": "BonusAnswer list",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bonus_help": {
+          "type": "string"
+        },
+        "bonus_name": {
+          "type": "string"
+        },
+        "bonus_time": {
+          "type": "integer"
+        },
+        "delay_sec": {
+          "type": "integer"
+        },
+        "for_member_id": {
+          "type": "integer"
+        },
+        "has_absolute_limit": {
+          "type": "boolean"
+        },
+        "has_delay": {
+          "type": "boolean"
+        },
+        "has_relative_limit": {
+          "type": "boolean"
+        },
+        "level_ids": {
+          "description": "rbCustomLevels checkboxes",
+          "type": "array",
+          "items": {
+            "type": "integer"
+          }
+        },
+        "life_time_sec": {
+          "type": "integer"
+        },
+        "negative": {
+          "type": "boolean"
+        },
+        "task": {
+          "type": "string"
+        },
+        "valid_from": {
+          "type": "string"
+        },
+        "valid_to": {
+          "type": "string"
+        }
+      }
+    },
+    "models.AdminHelpRequest": {
+      "type": "object",
+      "properties": {
+        "for_member_id": {
+          "type": "integer"
+        },
+        "help_text": {
+          "type": "string"
+        },
+        "is_penalty": {
+          "type": "boolean"
+        },
+        "penalty_comment": {
+          "type": "string"
+        },
+        "penalty_score": {
+          "type": "integer"
+        },
+        "penalty_time": {
+          "type": "integer"
+        },
+        "request_penalty_confirm": {
+          "type": "boolean"
+        },
+        "timeout": {
+          "type": "integer"
+        }
+      }
+    },
+    "models.AdminLevelSettingsRequest": {
+      "type": "object",
+      "properties": {
+        "answer_penalty_type_id": {
+          "type": "integer"
+        },
+        "answer_result_display_type_id": {
+          "type": "integer"
+        },
+        "answer_score_penalty": {
+          "type": "integer"
+        },
+        "answer_time_penalty_hours": {
+          "type": "integer"
+        },
+        "answer_time_penalty_minutes": {
+          "type": "integer"
+        },
+        "answer_time_penalty_seconds": {
+          "type": "integer"
+        },
+        "answer_type_id": {
+          "type": "integer"
+        },
+        "attempts_count": {
+          "type": "integer"
+        },
+        "attempts_number": {
+          "type": "integer"
+        },
+        "attempts_period_hours": {
+          "type": "integer"
+        },
+        "attempts_period_minutes": {
+          "type": "integer"
+        },
+        "attempts_period_seconds": {
+          "type": "integer"
+        },
+        "block_type_id": {
+          "type": "integer"
+        },
+        "buttons_answers_direction_id": {
+          "type": "integer"
+        },
+        "complete_type_id": {
+          "type": "integer"
+        },
+        "duration_hours": {
+          "type": "integer"
+        },
+        "duration_minutes": {
+          "type": "integer"
+        },
+        "duration_seconds": {
+          "type": "integer"
+        },
+        "pass_limit": {
+          "type": "integer"
+        },
+        "passing_condition_id": {
+          "type": "integer"
+        },
+        "required_answers_num": {
+          "type": "integer"
+        },
+        "required_points": {
+          "type": "integer"
+        },
+        "required_sectors_count": {
+          "description": "0 = all sectors",
+          "type": "integer"
+        },
+        "restriction_enabled": {
+          "type": "boolean"
+        },
+        "section": {
+          "description": "start, duration, blocking, sectors, restriction, answers_settings, pass_rule",
+          "type": "string"
+        },
+        "start_date_time": {
+          "description": "dd.MM.yyyy HH:mm:ss",
+          "type": "string"
+        },
+        "unrestricted": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}

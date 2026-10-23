@@ -1,0 +1,31 @@
+import {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js';
+import {z} from 'zod';
+import {mkdir,writeFile,readFile} from 'node:fs/promises';
+import {join} from 'node:path';
+import {createImportJournal} from './import-store.js';
+import {importPlanSchema,planReference,resourceFingerprint,planError,verifyImportPlan,reconcileImportPlan,inspectImportLevel,createLevelFromPlan,type PlanHost,type Journal} from './import-plan.js';
+import {safeError} from './redaction.js';
+export function registerImportPlanTools(server:McpServer,host:(profile:string|undefined)=>Promise<PlanHost>,directory:()=>string){
+ const ref=z.string().regex(/^[a-f0-9]{64}$/),profile=z.string().optional();
+ const result=(v:unknown)=>({content:[{type:'text' as const,text:JSON.stringify(v)}]});
+ const call=async(fn:()=>Promise<unknown>)=>{try{return result(await fn());}catch(e){return {...result({status:'blocked',error:safeError(e)}),isError:true};}};
+ const load=async(planRef:string)=>{const p=importPlanSchema.parse(JSON.parse(await readFile(join(directory(),planRef+'.plan.json'),'utf8')));if(planReference(p)!==planRef)throw Error('Stored plan integrity mismatch');return p;};
+ const store=(planRef:string)=>createImportJournal<Journal>(join(directory(),planRef+'.journal.json'));
+ const apply=async(a:{planRef:string;levelKey:string;confirmed:boolean;profile?:string})=>{
+  const p=await load(a.planRef),h=await host(a.profile),scope=createImportJournal<{active:string}>(join(directory(),resourceFingerprint({domain:p.domain,gameId:p.gameId})+'.scope.json'));
+  return scope.exclusive(async()=>{const active=await scope.load();if(active&&active.active!==a.planRef){const previousStore=store(active.active),previous=await previousStore.exclusive(()=>previousStore.load());if(previous){const old=await load(active.active),report=await verifyImportPlan(old,h,previous);if(report.status!=='complete'&&(Object.values(previous.steps).some(s=>['unknown','dispatching'].includes(s.status))||Object.values(previous.levels).some(id=>!p.levels.some(l=>l.targetLevelId===id))))throw planError('unfinished-import','Previous import '+active.active+' must be reconciled; a replacement plan must explicitly target its known levels');}}
+   await scope.save({active:a.planRef});return createLevelFromPlan(p,a.levelKey,h,store(a.planRef),a.confirmed);});
+ };
+ server.registerTool('encounter_inspect_import_level',{description:'Read an existing level and resource fingerprints before planning changes. Copy returned expectedResources into the plan with targetLevelId; explicit targetTaskId replaces that task, unspecified tasks/entities are preserved.',inputSchema:{gameId:z.number().int().positive(),levelId:z.number().int().positive(),profile}},a=>call(async()=>inspectImportLevel(await host(a.profile),a.gameId,a.levelId)));
+ server.registerTool('encounter_reconcile_import_plan',{description:'Recover the local journal after lost responses using fresh exact reads. Performs no game writes. Unique matching content/assets can be marked applied; missing results remain unknown and are never retried. Optional attribution is ONLY for an author explicitly confirming the candidate ID belongs to this lost create; never infer authorConfirmation from the original import permission.',inputSchema:{planRef:ref,profile,attribution:z.object({levelKey:z.string().min(1),levelId:z.number().int().positive(),authorConfirmation:z.string().min(1)}).strict().optional()}},a=>call(async()=>reconcileImportPlan(await load(a.planRef),await host(a.profile),store(a.planRef),a.attribution)));
+ server.registerTool('encounter_prepare_import_plan',{description:'Save an immutable full import plan before writes. Classify source blocks as player-content, author-requirement, reference or excluded. Include exact level names, final player HTML/text, supported settings, all-level organizer styles and explicit unresolved requirements. This does not approve or mutate a game. Assets support CSS/PNG/JPG/GIF; use {{asset:key}} in HTML. Existing levels require targetLevelId and inspected expectedResources; include sectors, bonuses, hints and additionalTasks as needed.',inputSchema:{plan:importPlanSchema}},({plan})=>call(async()=>{
+  const planRef=planReference(plan),dir=directory();await mkdir(dir,{recursive:true,mode:0o700});
+  try{await writeFile(join(dir,planRef+'.plan.json'),JSON.stringify(plan),{flag:'wx',mode:0o600});}catch(e){if((e as NodeJS.ErrnoException).code!=='EEXIST')throw e;await load(planRef);}
+  return {status:plan.unresolved.length?'blocked':'prepared',planRef,levels:plan.levels.map(l=>({key:l.key,name:l.name,sourceKeys:l.task.sourceKeys})),unresolved:plan.unresolved,next:plan.unresolved.length?'STOP: do not call create_level_from_plan. Resolve the listed in-scope blockers. Explicit exclusions or intentionally unchanged settings belong outside unresolved. Prepare a corrected plan before any write.':'Review full plan against original request. Then create each level in order with create_level_from_plan. Finally verify_import_plan.'};
+ }));
+ server.registerTool('encounter_create_level_from_plan',{description:'Create or update ONE planned level, including tasks, sectors, bonuses, hints, assets and settings; attach planned all-level organizer text once all levels exist. Requires authorization for the whole stored plan. Durable journal prevents duplicate creates after failures; partial/unknown results require read-only reconciliation. Legacy adapter only. Call verify_import_plan before claiming completion.',inputSchema:{planRef:ref,levelKey:z.string().min(1),confirmed:z.literal(true),profile}},a=>call(()=>apply(a)));
+ server.registerTool('encounter_verify_import_plan',{description:'Read-only full-plan verification: actual names/order, exact task text/recipient, settings and organizer text/all-levels mode. Returns complete/partial/blocked with discrepancies. Never accepts model-asserted evidence and never retries mutations. Semantic source selection must also be checked against the user request.',inputSchema:{planRef:ref,profile}},a=>call(async()=>{
+  const p=await load(a.planRef),h=await host(a.profile),s=store(a.planRef);
+  return s.exclusive(async()=>verifyImportPlan(p,h,await s.load()??{planRef:a.planRef,levels:{},steps:{}}));
+ }));
+}

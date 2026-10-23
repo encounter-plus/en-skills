@@ -1,0 +1,12 @@
+import {legacyAnswerOperation,type LegacyAnswerOperationArgs} from './authoring-browser.ts';
+import type {LegacyOperationSpec} from './operation-contract.ts';
+const positive=(value:unknown):value is number=>typeof value==='number'&&Number.isSafeInteger(value)&&value>0;
+export const legacyAnswerOperationSpec:LegacyOperationSpec={
+ definition:{type:'function',function:{name:'encounter_propose_answer_operation',description:'Prepare an immutable review card to update or delete one exact legacy answer. Preserves its sector, native recipient assignment and every sibling answer. Never submits a code to the game engine.',parameters:{type:'object',additionalProperties:false,properties:{action:{type:'string',enum:['create','update','delete']},levelId:{type:'integer',minimum:1},answerId:{type:'integer',minimum:1},sectorId:{type:'integer',minimum:1},answerText:{type:'string',minLength:1,maxLength:100000},forMemberId:{type:'integer',minimum:0}},required:['action','levelId']}}},
+ capability:args=>args.action==='create'?'answer-create':args.action==='delete'?'answer-delete':'answer-update',
+ validate(value){if(!['create','update','delete'].includes(String(value.action))||!positive(value.levelId)||(value.action==='create'?value.answerId!==undefined||!positive(value.sectorId):!positive(value.answerId)||(value.action==='delete'?!positive(value.sectorId):value.sectorId!==undefined))||Object.keys(value).some(key=>!['action','levelId','answerId','answerText','sectorId','forMemberId'].includes(key))||value.forMemberId!==undefined&&(typeof value.forMemberId!=='number'||!Number.isSafeInteger(value.forMemberId)||value.forMemberId<0)||value.action==='delete'&&(value.answerText!==undefined||value.forMemberId!==undefined)||value.action!=='delete'&&(value.answerText===undefined?value.action==='create'||value.forMemberId===undefined:typeof value.answerText!=='string'||!value.answerText||value.answerText.length>100000))throw new Error('Choose an exact answer and literal nonempty replacement');return structuredClone(value)as Record<string,unknown>&{levelId:number};},
+ read:(api,args,signal)=>legacyAnswerOperation.read(api,args as LegacyAnswerOperationArgs,signal),
+ checkBefore:(before,args)=>legacyAnswerOperation.checkBefore(before,args as LegacyAnswerOperationArgs),
+ request:(api,args,before)=>legacyAnswerOperation.request(api,args as LegacyAnswerOperationArgs,before),
+ verify:(before,after,args)=>legacyAnswerOperation.verify(before,after,args as LegacyAnswerOperationArgs),
+};

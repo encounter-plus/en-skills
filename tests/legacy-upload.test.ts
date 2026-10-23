@@ -1,0 +1,10 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {parseLegacyUploadForm,LegacyFiles} from '../src/legacy-files.ts';
+import {authoringBinding} from '../src/authoring-api.ts';
+import {validateLegacyRecipe} from '../src/legacy-recipe-guard.ts';
+import type {LegacyRecipe} from '../src/legacy-authoring.ts';
+const binding=authoringBinding('fixture.en.cx',42,'s'),path='/Administration/Games/FileUploader.aspx?gid=42';
+const page={status:200,url:'https://fixture.en.cx'+path,html:'<form method="post" enctype="multipart/form-data"><input type="hidden" name="__VIEWSTATE" value="fixture"><input type="file" name="Upload"><input type="submit" name="Send" value="Upload"></form>'};
+test('observed multipart controls are preserved, unknown or ambiguous forms fail closed',()=>{const form=parseLegacyUploadForm(page,binding);assert.equal(form.field,'Upload');assert.deepEqual(form.controls,[['__VIEWSTATE','fixture'],['Send','Upload']]);for(const html of [page.html.replace('multipart/form-data','application/x-www-form-urlencoded'),page.html.replace('</form>','<input type=file name=other></form>'),page.html.replace('<form ','<form action="https://evil.invalid" ')])assert.throws(()=>parseLegacyUploadForm({...page,html},binding));});
+test('native upload uses observed form once and fixed scoped recipe',async()=>{const recipes:LegacyRecipe[]=[];const api=new LegacyFiles({binding,supportsFileUpload:true,currentBinding:async()=>binding,dispatch:async recipe=>{validateLegacyRecipe(recipe,binding);recipes.push(recipe);return page;}});const response=await api.request('/admin/games/42/files/upload',{method:'POST',body:JSON.stringify({filename:'test.css',mime:'text/css',base64:'YSB7fQ=='})});assert.equal(response!.ok,true);assert.equal(recipes.filter(r=>r.effect==='mutation').length,1);assert.equal(recipes[1]!.upload!.field,'Upload');assert.throws(()=>validateLegacyRecipe({...recipes[1]!,path:path.replace('42','43')},binding));});

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "mode": "local-draft",
+  "gameId": "synthetic-game-001",
+  "domain": "synthetic.invalid",
+  "edits": [
+    {
+      "levelId": "synthetic-level-001",
+      "field": "task",
+      "before": "Найдите учебную надпись. ФО: код без префикса.",
+      "after": "Найдите одну надпись на учебной карточке. ФО: код без префикса.",
+      "reason": "Уточнить количество и область поиска в синтетическом примере."
+    }
+  ]
+}

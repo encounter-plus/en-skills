@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {mapSourceFields} from '../src/source-fields.ts';
+test('source pointers transfer literal HTML and zero-prefixed codes without coercion',()=>{const html='<div>Конь6\n😀</div>'.repeat(4000),root={rows:[['001',html]]};assert.deepEqual(mapSourceFields(root,{reward_seconds:15},{new_answers:'/rows/0/0',help_text:'/rows/0/1'}),{reward_seconds:15,new_answers:['001'],help_text:html});});
+test('source mapping rejects missing, inherited, duplicate and non-text fields',()=>{for(const pointers of <Record<string,string>[]>[{help_text:'/missing'},{help_text:'/toString'},{reward_seconds:'/x'},{help_text:'/x'}])assert.throws(()=>mapSourceFields({x:42},{},pointers));assert.throws(()=>mapSourceFields({x:'value'},{help_text:'other'},{help_text:'/x'}));});

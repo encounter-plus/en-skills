@@ -1,0 +1,46 @@
+name: Ошибка инструмента или установки
+description: Не удаётся установить скиллы, запустить команду, MCP или проверку WebView.
+title: "[Инструмент] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Можете использовать синтетические данные или реальные данные создания игры, если можете ими поделиться. Перед публикацией удалите из команд, логов и снимков экрана токены и данные, которые нельзя раскрывать.
+        Если инструмент запускается, но ассистент неверно выполняет задачу, выберите форму «Скилл ведёт себя неверно».
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Как воспроизвести ошибку?
+      description: Укажите способ установки или команду, последовательность действий и минимальный пример.
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Что произошло?
+      description: Приведите текст ошибки или короткий очищенный фрагмент лога.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Что должно было произойти?
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Окружение
+      description: ОС, приложение, версия en-skills или дата установки. Для CLI/MCP добавьте версию Node.js, если знаете.
+    validations:
+      required: true
+  - type: dropdown
+    id: runtime
+    attributes:
+      label: Если ошибка связана с проверкой скрипта, где она возникает?
+      options:
+        - Не относится к проверке скриптов / не знаю
+        - EN+ Kotlin WebView (modern)
+        - EN+ React Native (legacy)
+        - Preview на сайте Encounter
+        - В нескольких вариантах

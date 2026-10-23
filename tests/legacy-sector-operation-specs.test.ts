@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {legacySectorOperationSpec as spec} from '../src/legacy-sector-operation-specs.ts';
+const before={game_id:42,level_id:9,version:'v1',sectors:[{sector_id:71,sector_name:'old'},{sector_id:72,sector_name:'sibling'}],answers:[{answer_id:31,sector_id:71,answer_text:'001'},{answer_id:32,sector_id:72,answer_text:'002'}],sector_proofs:[{sector_id:71,preservation_version:'a'},{sector_id:72,preservation_version:'b'}]};
+test('sector review verifies exact IDs, codes and opaque sibling form preservation',()=>{
+ const rename=spec.validate({action:'rename',levelId:9,sectorId:71,sectorName:'  literal  '}),renamed={...before,sectors:[{sector_id:71,sector_name:'  literal  '},before.sectors[1]]};assert.equal(spec.verify(before,renamed,rename),true);assert.equal(spec.verify(before,{...renamed,sector_proofs:[before.sector_proofs[0],{sector_id:72,preservation_version:'changed'}]},rename),false);
+ const deletion=spec.validate({action:'delete',levelId:9,sectorId:71}),deleted={...before,sectors:[before.sectors[1]],answers:[before.answers[1]],sector_proofs:[before.sector_proofs[1]]};assert.equal(spec.verify(before,deleted,deletion),true);assert.equal(spec.verify(before,{...deleted,answers:[]},deletion),false);
+ const creation=spec.validate({action:'create',levelId:9,sectorName:'new'}),created={...before,sectors:[...before.sectors,{sector_id:73,sector_name:'new'}],sector_proofs:[...before.sector_proofs,{sector_id:73,preservation_version:'new'}]};assert.equal(spec.verify(before,created,creation,{created_sector_id:73}),true);assert.equal(spec.verify(before,created,creation,{created_sector_id:74}),false);
+ assert.throws(()=>spec.checkBefore!(before,{levelId:9,action:'rename',sectorId:999}));assert.throws(()=>spec.validate({action:'delete',levelId:9,sectorId:71,sectorName:'hidden change'}));
+});

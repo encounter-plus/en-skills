@@ -1,0 +1,65 @@
+{
+  "contract": "https://demo.en.cx/docs/engine-task-contract.html",
+  "styles": [
+    {
+      "file": "style-0.css"
+    },
+    {
+      "file": "style-1.css"
+    }
+  ],
+  "assets": [
+    {
+      "file": "assets/9b8fa30eaaa1b7f0.woff2"
+    },
+    {
+      "file": "assets/df048330045f432c.woff2"
+    },
+    {
+      "file": "assets/a9cbb6b1f248e20b.woff2"
+    },
+    {
+      "file": "assets/7dd7150c58c01595.woff2"
+    },
+    {
+      "file": "assets/b2de6009fc8df8a8.woff2"
+    },
+    {
+      "file": "assets/818337a30916cdea.woff2"
+    },
+    {
+      "file": "assets/a6398c7f057df6b4.woff2"
+    },
+    {
+      "file": "assets/199aa0ae53620707.woff2"
+    },
+    {
+      "file": "assets/bc655cc2bcfe19c8.woff2"
+    },
+    {
+      "file": "assets/50f27b0cb95b0971.woff2"
+    },
+    {
+      "file": "assets/8db49c7e0a91721b.woff2"
+    },
+    {
+      "file": "assets/a255a685157f92c6.woff2"
+    },
+    {
+      "file": "assets/4932598b2bac454a.woff2"
+    },
+    {
+      "file": "assets/63931948e06cc909.woff2"
+    },
+    {
+      "file": "assets/1aac6aeda70ea3a8.woff2"
+    },
+    {
+      "file": "assets/d18e94cba17ab87e.woff2"
+    },
+    {
+      "file": "assets/188b63e3e9f6e439.woff2"
+    }
+  ],
+  "coverage": "local announcement styles and assets; no gameplay runtime"
+}

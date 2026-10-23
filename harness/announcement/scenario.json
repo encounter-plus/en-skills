@@ -1,0 +1,11 @@
+{
+  "steps": [
+    {
+      "click": "#show-kit",
+      "expectText": {
+        "selector": "#kit-result",
+        "text": "Фонарик и удобная обувь"
+      }
+    }
+  ]
+}

@@ -1,0 +1,159 @@
+{
+  "responses": [],
+  "messages": [
+    {
+      "id": 1,
+      "owner": "Synthetic",
+      "hasScript": true,
+      "html": "<div id=\"rn-message\">Message</div><script>window.order.push(\"message\");</script>"
+    }
+  ],
+  "steps": [
+    {
+      "press": {
+        "selector": "#keyboard-probe",
+        "key": "Enter"
+      },
+      "expectText": {
+        "selector": "#keyboard-result",
+        "text": "Enter"
+      }
+    },
+    {
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "Initial"
+      }
+    },
+    {
+      "update": {
+        "section": "messages",
+        "data": [
+          {
+            "id": 2,
+            "owner": "Synthetic",
+            "hasScript": true,
+            "html": "<div id=\"rn-message\">Updated message</div><script>document.getElementById(\"rn-task\").textContent=\"Updated by message\";</script>"
+          }
+        ]
+      },
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "Initial"
+      },
+      "expectRefreshRequests": 1
+    },
+    {
+      "rebuild": {
+        "taskHtml": "<div id=\"rn-task\">Initial</div><script>window.memory=1;</script>"
+      },
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "Updated by message"
+      },
+      "expectRefreshRequests": 0,
+      "expectActionCount": 0
+    },
+    {
+      "update": {
+        "section": "hints",
+        "data": {
+          "hints": [
+            {
+              "id": 3,
+              "number": 1,
+              "text": "<div>Hint</div><script>document.getElementById(\"rn-task\").textContent=\"Updated by hint\";</script>",
+              "textHasScript": true,
+              "remainSeconds": 0,
+              "isPenalty": false
+            }
+          ],
+          "penaltyHints": []
+        }
+      },
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "Updated by hint"
+      }
+    },
+    {
+      "update": {
+        "section": "bonuses",
+        "data": [
+          {
+            "id": 4,
+            "number": 1,
+            "name": "Synthetic bonus",
+            "task": "Bonus",
+            "taskHasScript": false,
+            "taskCopyText": "Bonus",
+            "help": "<script>document.getElementById(\"rn-task\").textContent=\"Updated by Help\";</script>",
+            "helpHasScript": true,
+            "helpCopyText": "",
+            "expired": false,
+            "secondsToStart": 0,
+            "secondsLeft": 0,
+            "awardTime": 60,
+            "negative": false,
+            "fromEarlierLevel": false,
+            "isAnswered": true,
+            "answer": {
+              "code": "synthetic",
+              "login": "Synthetic",
+              "time": "00:01"
+            }
+          }
+        ]
+      },
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "Updated by Help"
+      },
+      "expectActionCount": 0
+    },
+    {
+      "update": {
+        "section": "sectors",
+        "data": [
+          {
+            "id": 5,
+            "order": 1,
+            "name": "Synthetic sector",
+            "isAnswered": false,
+            "answer": null
+          }
+        ]
+      },
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "Updated by Help"
+      }
+    },
+    {
+      "update": {
+        "section": "task",
+        "data": "<div id=\"rn-task\">Task update</div><script>localStorage.setItem(\"seed\",\"stored\");window.memory=99;</script>"
+      },
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "Task update"
+      }
+    },
+    {
+      "rebuild": {
+        "taskHtml": "<div id=\"rn-task\"></div><script>window.memory=(window.memory||0)+1;document.getElementById(\"rn-task\").textContent=localStorage.getItem(\"seed\")+\":\"+window.memory;</script>",
+        "fixture": {
+          "messages": [],
+          "hints": [],
+          "bonuses": []
+        }
+      },
+      "expectText": {
+        "selector": "#rn-task",
+        "text": "stored:1"
+      },
+      "expectActionCount": 0,
+      "expectRefreshRequests": 0
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "coverage": "reconstructed-game-page",
+  "styles": {
+    "source": "../engine/manifest.json",
+    "files": [
+      "style-0.css",
+      "style-1.css"
+    ]
+  },
+  "limitations": [
+    "Outer page layout reconstructed, not a full HTML capture.",
+    "Author scripts execute as ordinary browser scripts; live site sanitization/insertion lifecycle not emulated.",
+    "No gameplay API, real network, authentication or Android WebView emulation."
+  ]
+}
