@@ -13,9 +13,9 @@ test('CLI works from unrelated cwd and keeps Cyrillic variants', () => {
   const p = run('code-variants', '--code', 'конь6'); assert.equal(p.status, 0, p.stderr);
   assert.ok(JSON.parse(p.stdout).variants.some((v: any) => v.code === 'кон66'));
 });
-test('checklist has 98 separate statuses and virtual excludes field checks', () => {
+test('checklist has 99 separate statuses and virtual excludes field checks', () => {
   const p = run('checklist', '--format', 'virtual'); assert.equal(p.status, 0, p.stderr);
-  const result = JSON.parse(p.stdout); assert.equal(result.rules.length, 98);
+  const result = JSON.parse(p.stdout); assert.equal(result.rules.length, 99);
   assert.ok(result.rules.some((r: any) => r.id === 'MARK-01' && r.status === 'not-applicable'));
   assert.ok(result.rules.some((r: any) => r.id === 'LOGIC-01' && r.status === 'not-checked'));
 });

@@ -23,9 +23,9 @@ test('Markdown catalog parser preserves multiline tables and rejects lost metada
   const result=spawnSync(process.execPath,['--input-type=module','-e',source],{encoding:'utf8'});
   assert.equal(result.status,0,result.stderr);
 });
-test('built catalog retains 98 rules and the single MARK-02 table',()=>{
+test('built catalog retains 99 rules and the single MARK-02 table',()=>{
   const catalog=JSON.parse(readFileSync(fileURLToPath(new URL('../dist/knowledge/authoring-rules.json',import.meta.url)),'utf8'));
-  assert.equal(catalog.rules.length,98);
+  assert.equal(catalog.rules.length,99);
   assert.equal(catalog.rules.filter((r:any)=>r.id.startsWith('MARK-')).length,19);
   assert.match(catalog.rules.find((r:any)=>r.id==='MARK-02').text,/\| S \/ 5 \|/);
 });
