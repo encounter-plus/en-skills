@@ -15,6 +15,11 @@ test('game workspaces are independent and reinitialization preserves author deci
     const entries=await readdir(a.root);
     assert.ok(!entries.includes('planning'));
     assert.ok(!entries.includes('archive'));
+    const cardPath=join(a.root,'GAME.md');
+    const newCard=await readFile(cardPath,'utf8');
+    assert.match(newCard,/Общий документ[\s\S]*Выбор автора: ещё не уточнён/);
+    const localCard=newCard.replace('ещё не уточнён','Ведём локально');
+    await writeFile(cardPath,localCard);
     await writeFile(join(a.root,'decisions.md'),'Согласовано автором');
     await writeFile(join(a.root,'tasks.md'),'T-042: активная задача');
     await mkdir(join(a.root,'planning'));
@@ -22,6 +27,7 @@ test('game workspaces are independent and reinitialization preserves author deci
     await mkdir(join(a.root,'archive','tasks'),{recursive:true});
     await writeFile(join(a.root,'archive','tasks','2026-10.md'),'T-041: проверено');
     assert.equal((await initializeWorkspace(a.root,'Другое имя')).created,false);
+    assert.equal(await readFile(cardPath,'utf8'),localCard);
     assert.equal(await readFile(join(a.root,'decisions.md'),'utf8'),'Согласовано автором');
     assert.equal(await readFile(join(a.root,'tasks.md'),'utf8'),'T-042: активная задача');
     assert.equal(await readFile(join(a.root,'planning','backlog.md'),'utf8'),'T-043: отложено');
